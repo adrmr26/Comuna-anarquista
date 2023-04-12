@@ -1,9 +1,9 @@
-#include <studio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int main()
 {
-	FILE *archivo 
+	FILE *archivo;
 	char carater;
 
 	archivo =fopen("Mantener huerto.txt","r");
@@ -13,7 +13,7 @@ int main()
 		printf("Si sirvio\n\n");
 		while(feof(archivo)==0){
 			carater=fgetc(archivo);
-			printf("%sc",carater);
+			printf("%c",carater);
 
 		}
 	}
