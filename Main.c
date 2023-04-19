@@ -1,3 +1,6 @@
+#include <stdio.h>
+
+
 struct Panel {
 	int Bateria;
 };
@@ -11,6 +14,11 @@ struct Requiere {
 struct Trabaja{
 	int Tiempo;
 	int Bateria;
+};
+
+struct Persona{
+	struct Trabaja trabaja;
+	struct Requiere requiere; 
 };
 
 
