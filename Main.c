@@ -1,22 +1,5 @@
 #include <stdio.h>
-
-
-struct Panel {
-	int Bateria;
-};
-
-struct Requiere {
-	char Area[10];
-	int Tiempo;
-	int Bateria;
-};
-
-struct Trabaja{
-	int Tiempo;
-	int Bateria;
-};
-
-
+#include "structs.h"
 
 int main(){
 	struct Panel P = {100};

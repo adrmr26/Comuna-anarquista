@@ -1,9 +1,6 @@
 #include <stdio.h>
+#include "structs.h"
 
-struct Nodo{
-	/*Argear el tipo persona*/
-	struct Nodo *siguiente;
-};
 
 struct Nodo * agregar(struct Nodo *cola, /*valor persona*/){
     struct Nodo *temporal = calloc(sizeof(struct Nodo),1);
