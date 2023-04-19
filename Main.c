@@ -2,10 +2,13 @@ struct Panel {
 	int Bateria;
 };
 
-
-
 struct Requiere {
 	char Area[10];
+	int Tiempo;
+	int Bateria;
+};
+
+struct Trabaja{
 	int Tiempo;
 	int Bateria;
 };
