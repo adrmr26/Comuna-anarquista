@@ -63,10 +63,10 @@ int main() {
     p.trabaja = malloc(0);
     p.requiere = malloc(0);
     p.cantidad_de_palabras = 0; /* Se inicializan la cantidad de palabras */
-    p.cantidad_requiere = 0; /* Se inicializan la cantidad de Requiere */
+    p.cantidad_trabaja = 0; /* Se inicializan la cantidad de Requiere */
     p.cantidad_requiere = 0; /* Se incializa la cantidad de Trabaja */ 
 
-    Para llenar la lista de acciones 
+    /*Para llenar la lista de acciones*/ 
     agregar_palabra_listaAcciones(&p, "Trabaja");
     agregar_palabra_listaAcciones(&p, "Requiere");
     agregar_palabra_listaAcciones(&p, "Trabaja");
@@ -104,6 +104,8 @@ int main() {
     }
     free(p.trabaja);
     printf("\n");
+
+    /*Para llenar la lista de Requiere de la Persona */
 
     agregar_requiere(&p, "Huerto", 10, 50);
     agregar_requiere(&p, "Taller", 20, 70);
