@@ -1,0 +1,15 @@
+Requiere Culto 3 30 #Para empezar el dia bendecido
+Requiere Biblioteca 1 13 #Para aprender como hacer pizza
+Requiere Despensa 1 6 #Comprar los materiales que se ocupan
+Trabaja 4 22 #Trabaja un poquito en la pizza
+Requiere Huerto 2 5 #Se olvido de los tomates
+Trabaja 1 12 #Volver a Trabaja un poquito
+Requiere Recreacion 3 17 #Se aburrio y se fue al parque
+Trabaja 4 11 #Trabaja otro poquito
+Requiere Culto 4 10 #Ya perdio la bendicion del inicio
+Requiere Despensa 1 20 #Se quedo sin ingredientes
+Trabaja 1 20 #Trabaja en la quinta pizza porque las otras quedaron mal
+Requiere Gym 1 8 #Entrenar un poquito para bajar las pizzas
+Requiere Biblioteca 3 8 #Leer un poquito mas porque la salsa quedo fea
+Trabaja 3 12 #Trabaja ahora si en serio
+Trabaja 2 19 #Trabaja extras para terminar la pizza

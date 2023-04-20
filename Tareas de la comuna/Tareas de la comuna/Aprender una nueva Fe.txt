@@ -1,0 +1,18 @@
+Requiere Biblioteca 71 40 # Nuevas creencias
+Trabaja 20 20 # Estudiar nueva Fe
+Requiere Culto 121 21 # Un lugar donde hacer plegarias
+Requiere Despensa 50 21 # Comida y ofrenda
+Trabaja 33 61 # Rezar con mucha intensidad 
+Trabaja 23 23 # Rezar con menos intensidad
+Requiere Culto 53 8 # Mejor otra creencia
+Trabaja 9 1 # Ofrecer ofrendas
+Requiere Despensa 8 3 # Un refrigerio
+Trabaja 10 5 # Se alimenta
+Requiere Biblioteca 33 14 # Intento de otra creencia
+Trabaja 66 6 # Estudios sobre el satanismo
+Requiere Biblioteca 20 20 # Unos versículos en una lengua muerta
+Trabaja 15 12 # memorizar
+Requiere culto 41 12 # Cambio de creencia
+Trabaja 17 21 # Plegaria al 666
+Trabaja 5 12 # Posesión demoniaca
+Requiere Farmacia 170 80 # Vuelto a la vida
