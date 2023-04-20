@@ -2,10 +2,10 @@
 #include "structs.h"
 
 
-struct Nodo * agregar(struct Nodo *cola, /*valor persona*/){
+struct Nodo * agregar(struct Nodo *cola, struct Persona *valor){
     struct Nodo *temporal = calloc(sizeof(struct Nodo),1);
     struct Nodo *pivote;
-    temporal->/*el objeto persona*/ = valor;
+    temporal->persona = valor;
     if (cola != NULL){
         pivote = cola;
         while (pivote->siguiente != NULL) { 
