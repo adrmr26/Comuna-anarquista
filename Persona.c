@@ -112,7 +112,7 @@ int main() {
 
     printf("Lista de Requieres:\n");
     for (int i = 0; i < p.cantidad_requiere; i++) {
-        printf("Requiere %d - Área: %s, Tiempo: %d, Batería: %d\n", i+1, p.requiere[i].Area, p.requiere[i].Tiempo, p.requiere[i].Bateria);
+        printf("Requiere %d - Area: %s, Tiempo: %d, Bateria: %d\n", i+1, p.requiere[i].Area, p.requiere[i].Tiempo, p.requiere[i].Bateria);
     }
 
     free(p.requiere);
