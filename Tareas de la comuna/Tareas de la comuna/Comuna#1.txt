@@ -1,0 +1,19 @@
+Requiere despensa 30 10 # Lo primero es desayunar
+Requiere Gym 60 10 # Hacer una hora de ejercicio
+Trabaja 30 10 # Alistar todo lo necesario para el día laboral  
+Trabaja 30 30 # Atender a un paciente y comprobar que tiene 
+Requiere biblioteca 20 10 # Comparar notas con libros para confirmar
+Requiere farmacia 10 10 # Obtener las medicinas que se van a prescribir 
+Trabaja 5 10 # Especificar al paciente la receta asignada y detalles 
+Trabaja 120 60 # Repetir el proceso con pacientes que haiga hasta las 12
+Requiere despensa 20 10 # Tomar un tiempo para almorzar 
+Requiere recreativo 10 10 # Tomar corto descanso
+Requiere biblioteca 30 10 # Comprobar notas para una operación
+Requiere despensa 20 10 # Obtener el material necesario
+Requiere farmacia 20 10 # Obtener el material necesario
+Trabaja 10 20 # Prepara y comprobar todo
+Trabaja 120 120 # Realizar la operación  
+Trabaja 180 120 # Realizar la jornada laboral del día
+Requiere despensa 20 10 # Obtener la cena
+Requiere recreativo 60 60 # Disfrutar del tiempo libre 
+Requiere culto 30 10 # Orar o realizar la actividad religiosa 

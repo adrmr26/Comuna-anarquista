@@ -1,0 +1,15 @@
+Trabaja 45 2 #Ordenando el espacio 
+Requiere despensa 40 2 #Va por mas sillas
+Trabaja 30 3 #Preparando la agenda 
+Requiere biblioteca 30 2 #Va por el libro del culto
+Trabaja 120 5 #Da el primer sermón
+Requiere recreación 45 3 #Va por el desayuno  
+Requiere recreación 60 4 #Se va a dormir
+Trabaja 45 4 #Limpiando y acomodando 
+Requiere despensa 30 2 #Va por productos de limpieza 
+Requiere Gym 60 8 #Va a cardio dance
+Trabaja 30 3 #Preparando la agenda del segundo sermón 
+Requiere recreación 45 3 #Va por el almuerzo  
+Requiere biblioteca 50 4 #Se va a leer
+Trabaja 120 5 #Da el segundo sermón
+Requiere recreación 50 5 #Toma café y chismea

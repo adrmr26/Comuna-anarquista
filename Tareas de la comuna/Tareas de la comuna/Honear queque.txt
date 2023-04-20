@@ -1,0 +1,15 @@
+Trabaja 20 5 #Consulta a la comunidad por el queque que quieren
+Require Biblioteca 40 15 #Buscar reseta
+Trabaja 2 3 #Consulta si le gusta la reseta  
+Require Huerto 6 9 #Cosecha la fruta  
+Trabaja 8 5 #Corta la fruta
+Require Despensa 4 7 #Buscar los ingrediantes de reseta
+Trabaja 50 10 #Prepara la mezcla del queque 
+Trabaja 20 25 #Hornea el queque 
+Require Recreación 30 1 #Mirar a la nada esperando 
+Trabaja 20 2 #Lo saca del horno y lo deja reposar
+Require Huerto 10 2 #Busca las frutas para decorar 
+Require Despensa 10 2 #Crema para decorar 
+Trabaja 8 #Cortar las furtas y batir la crema  
+Trabaja 12 6 #Decorar el queque   
+Require Gym 30 10 #Quemar las calorías del queque 

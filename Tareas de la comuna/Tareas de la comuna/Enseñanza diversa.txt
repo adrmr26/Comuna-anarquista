@@ -1,0 +1,15 @@
+Trabaja 30 2 #Prepara el aula 
+Requiere biblioteca 60 6 #Recolecta los libros que necesita de agronomía 
+Trabaja 60 6 #Inicia la primera lección sobre agricultura
+Requiere despensa 30 2 #Va por los implementos para la clase de cocina
+Requiere huerto 20 1 #Va por las verduras o frutas necesarias 
+Trabaja 60 7 #Da la lección de cocina 
+Requiere recreación 30 3 #Come su merienda
+Requiere biblioteca 30 3 #Recolecta los libros de biología
+Trabaja 60 4 #Inicia la lección de protección ambiental 
+Requiere taller 30 5 #Recoge las herramientas para la clase de electrónica 
+Trabaja 60 6 #Da la lección de electrónica para el mantenimiento de la batería  
+Requiere recreación 45 3 #Va y almuerza en el receso 
+Requiere taller 20 2 #Recoge las herramientas de carpintería  
+Trabaja 45 7 #Inicia las clases de industriales 
+Requiere taller 30 2 #Devuelve las herramientas 
