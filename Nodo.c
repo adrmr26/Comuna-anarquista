@@ -40,7 +40,7 @@ struct Persona* consultar_persona (struct Cola* cola ){
     }
 }
 
-
+/*
 int main() {
   
     //Cola cola; 
@@ -48,4 +48,4 @@ int main() {
     printf("Cola creada");
    
     return 0;
-}
+}*/

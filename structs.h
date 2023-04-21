@@ -7,6 +7,7 @@ struct Requiere {
 	char Area[10];
 	int Tiempo;
 	int Bateria;
+	Cola *cola_area;
 };
 
 struct Trabaja{
@@ -23,12 +24,12 @@ struct Persona {
     int cantidad_requiere;
 };
 
-typedef struct Nodo {
+struct Nodo {
 	struct Persona *persona;
 	struct Nodo *siguiente;
 };
 
-typedef struct Cola {
+struct Cola {
 	struct Nodo *primero;
 	struct Nodo *ultimo;
 };
