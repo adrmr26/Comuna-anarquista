@@ -1,3 +1,4 @@
+#include<stdio.h>
 
 struct Panel {
 	int Bateria;
@@ -23,8 +24,13 @@ struct Persona {
     int cantidad_requiere;
 };
 
-struct Nodo{
+struct Nodo {
 	struct Persona *persona;
 	struct Nodo *siguiente;
+};
+
+struct Cola {
+	struct Nodo *primero;
+	struct Nodo *ultimo;
 };
 

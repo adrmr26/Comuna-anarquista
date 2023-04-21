@@ -19,3 +19,9 @@ struct Nodo * agregar(struct Nodo *cola, struct Persona *valor){
 
     }
 };
+
+struct Nodo * eliminar(struct Nodo * cola){
+    cola->persona = NULL;
+    cola->siguiente = NULL;
+    free(cola);
+};
