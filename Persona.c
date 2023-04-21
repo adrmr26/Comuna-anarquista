@@ -55,18 +55,22 @@ void agregar_requiere(struct Persona *p, char *area, int tiempo, int bateria){
 
 // Recuerde incluir las librerías necesarias  
 
+
+/*
+
 int main() {
 
     struct Persona p;
 
-    p.listaAcciones = malloc(0); /* Se inicializa el espacio de memoria*/
+    p.listaAcciones = malloc(0); // Se inicializa el espacio de memoria
+    
     p.trabaja = malloc(0);
     p.requiere = malloc(0);
-    p.cantidad_de_palabras = 0; /* Se inicializan la cantidad de palabras */
-    p.cantidad_trabaja = 0; /* Se inicializan la cantidad de Requiere */
-    p.cantidad_requiere = 0; /* Se incializa la cantidad de Trabaja */ 
+    p.cantidad_de_palabras = 0; // Se inicializan la cantidad de palabras 
+    p.cantidad_trabaja = 0; // Se inicializan la cantidad de Requiere
+    p.cantidad_requiere = 0; // Se incializa la cantidad de Trabaja 
 
-    /*Para llenar la lista de acciones*/ 
+    //Para llenar la lista de acciones 
     agregar_palabra_listaAcciones(&p, "Trabaja");
     agregar_palabra_listaAcciones(&p, "Requiere");
     agregar_palabra_listaAcciones(&p, "Trabaja");
@@ -90,10 +94,10 @@ int main() {
     for (int i = 0; i < p.cantidad_de_palabras; i++) {
         free(p.listaAcciones[i]);
     }
-    free(p.listaAcciones); /*Hay que liberar la memoria */
+    free(p.listaAcciones); // Hay que liberar la memoria 
     printf("\n");
 
-    /*Para llenar la lista de Trabajas de la Persona */
+    // Para llenar la lista de Trabajas de la Persona 
 
     agregar_trabaja(&p, 80, 10);
     agregar_trabaja(&p, 90, 20);
@@ -105,7 +109,7 @@ int main() {
     free(p.trabaja);
     printf("\n");
 
-    /*Para llenar la lista de Requiere de la Persona */
+    // Para llenar la lista de Requiere de la Persona
 
     agregar_requiere(&p, "Huerto", 10, 50);
     agregar_requiere(&p, "Taller", 20, 70);
@@ -119,4 +123,4 @@ int main() {
    
 
     return 0;
-} 
+} */

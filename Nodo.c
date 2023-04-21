@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "structs.h"
 #include "Persona.c"
 
 
@@ -33,7 +32,7 @@ Cola * crear_colas() {
     return cola;
 };
 
-struct Persona* consultar_persona (Cola* cola ){
+struct Persona* consultar_persona (struct Cola* cola ){
     if (cola->primero){
         return cola->primero->persona;
     } else {
@@ -42,12 +41,11 @@ struct Persona* consultar_persona (Cola* cola ){
 }
 
 
-
-int main () {
+int main() {
   
-    Cola cola; 
-    crear_colas(&cola);
-    printf("Cla creada");
+    //Cola cola; 
+    crear_colas();
+    printf("Cola creada");
    
     return 0;
 }

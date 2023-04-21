@@ -3,19 +3,9 @@
 #include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include "structs.h"
 
 #define BUFFER_SIZE 1024
-
-struct Requiere {
-    char area[BUFFER_SIZE];
-    int bateria;
-    int tiempo;
-};
-
-struct Trabaja {
-    int bateria;
-    int tiempo;
-};
 
 int main() {
     char* path = "C:\\Users\\Adrmr\\Documents\\UNIVERSIDAD\\Operativos\\Tareas de la comuna\\";
@@ -43,15 +33,15 @@ int main() {
                         if (strcmp(token, "Requiere") == 0) {
                             // Extraer los datos y agregar a la lista de requieres
                             struct Requiere req;
-                            strcpy(req.area, strtok(NULL, " "));
-                            req.bateria = atoi(strtok(NULL, " "));
-                            req.tiempo = atoi(strtok(NULL, " "));
+                            strcpy(req.Area, strtok(NULL, " "));
+                            req.Bateria = atoi(strtok(NULL, " "));
+                            req.Tiempo = atoi(strtok(NULL, " "));
                             requieres[num_requiere++] = req;
                         } else if (strcmp(token, "Trabaja") == 0) {
                             // Extraer los datos y agregar a la lista de trabajas
                             struct Trabaja tra;
-                            tra.bateria = atoi(strtok(NULL, " "));
-                            tra.tiempo = atoi(strtok(NULL, " "));
+                            tra.Bateria = atoi(strtok(NULL, " "));
+                            tra.Tiempo = atoi(strtok(NULL, " "));
                             trabajas[num_trabaja++] = tra;
                         }
                     }
@@ -64,11 +54,11 @@ int main() {
         // Imprimir los datos
         printf("Requiere:\n");
         for (int i = 0; i < num_requiere; i++) {
-            printf("%s %d %d\n", requieres[i].area, requieres[i].bateria, requieres[i].tiempo);
+            printf("%s %d %d\n", requieres[i].Area, requieres[i].Bateria, requieres[i].Tiempo);
         }
         printf("\nTrabaja:\n");
         for (int i = 0; i < num_trabaja; i++) {
-            printf("%d %d\n", trabajas[i].bateria, trabajas[i].tiempo);
+            printf("%d %d\n", trabajas[i].Bateria, trabajas[i].Tiempo);
         }
     } else {
         printf("Error al abrir el directorio\n");

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "structs.h"
 
+
 int main(){
 	struct Panel P = {100};
 	struct Requiere s1 ={"Gym",12,11};
