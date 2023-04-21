@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "structs.h"
+#include "Persona.c"
 
 
 Nodo * agregar_persona(Nodo *cola, struct Persona *valor){
@@ -42,3 +43,11 @@ struct Persona* consultar_persona (Cola* cola ){
 
 
 
+int main () {
+  
+    Cola cola; 
+    crear_colas(&cola);
+    printf("Cla creada");
+   
+    return 0;
+}
