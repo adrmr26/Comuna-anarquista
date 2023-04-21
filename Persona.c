@@ -48,6 +48,47 @@ void agregar_requiere(struct Persona *p, char *area, int tiempo, int bateria){
 
 }
 
+// Función para eliminar una Acción o palabra de la lista de acciones.
+void eliminarPalabra_listaAcciones(struct Persona *p, int index){
+    if (index < 0 || index >= p->cantidad_de_palabras) {
+        printf("El índice está fuera de rango de la lista de Acciones de la persona.\n");
+        return;
+    }
+    free(p->listaAcciones[index]);
+    for (int i = index; i < p->cantidad_de_palabras - 1; i++) {
+        p->listaAcciones[i] = p->listaAcciones[i+1];
+    }
+    p->cantidad_de_palabras--;
+    p->listaAcciones = realloc(p->listaAcciones, p->cantidad_de_palabras * sizeof(char *));
+
+}
+
+// Función para eliminar un struct Trabaja de la lista de trabajas de la persona.
+void eliminar_trabaja(struct Persona *p, int index) {
+    if (index < 0 || index >= p->cantidad_trabaja) {
+        printf("El índice está fuera de rango de la lista de Trabaja de la persona.\n");
+        return;
+    }
+    for (int i = index; i < p->cantidad_trabaja - 1; i++) {
+        p->trabaja[i] = p->trabaja[i+1];
+    }
+    p->cantidad_trabaja--;
+    p->trabaja = realloc(p->trabaja, p->cantidad_trabaja * sizeof(struct Trabaja));
+}
+
+// Función para eliminar un struct Requiere de la lista de requieres de la persona.
+void eliminar_requiere(struct Persona *p, int index) {
+    if (index < 0 || index >= p->cantidad_requiere) {
+        printf("El índice está fuera de rango de la lista de Require de la persona.\n");
+        return;
+    }
+    for (int i = index; i < p->cantidad_requiere - 1; i++) {
+        p->requiere[i] = p->requiere[i+1];
+    }
+    p->cantidad_requiere--;
+    p->requiere = realloc(p->requiere, p->cantidad_requiere * sizeof(struct Requiere));
+}
+
 
 //---------------------------------------------------------------------------------------
 
