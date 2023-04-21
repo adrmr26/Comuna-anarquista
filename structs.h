@@ -24,13 +24,15 @@ struct Persona {
     int cantidad_requiere;
 };
 
-struct Nodo {
+typedef struct Nodo {
 	struct Persona *persona;
 	struct Nodo *siguiente;
 };
 
-struct Cola {
+typedef struct Cola {
 	struct Nodo *primero;
 	struct Nodo *ultimo;
 };
 
+typedef struct Nodo Nodo;
+typedef struct Cola Cola;

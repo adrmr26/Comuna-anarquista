@@ -2,9 +2,9 @@
 #include "structs.h"
 
 
-struct Nodo * agregar(struct Nodo *cola, struct Persona *valor){
-    struct Nodo *temporal = calloc(sizeof(struct Nodo),1);
-    struct Nodo *pivote;
+Nodo * agregar_persona(Nodo *cola, struct Persona *valor){
+    Nodo *temporal = calloc(sizeof(struct Nodo),1);
+    Nodo *pivote;
     temporal->persona = valor;
     if (cola != NULL){
         pivote = cola;
@@ -20,8 +20,25 @@ struct Nodo * agregar(struct Nodo *cola, struct Persona *valor){
     }
 };
 
-struct Nodo * eliminar(struct Nodo * cola){
+Nodo * eliminar_persona(Nodo * cola){
     cola->persona = NULL;
     cola->siguiente = NULL;
     free(cola);
 };
+
+Cola * crear_colas() {
+    Cola * cola = (Cola *) malloc(sizeof(Cola));
+    cola -> primero = cola->ultimo = NULL;
+    return cola;
+};
+
+struct Persona* consultar_persona (Cola* cola ){
+    if (cola->primero){
+        return cola->primero->persona;
+    } else {
+        return NULL;
+    }
+}
+
+
+
