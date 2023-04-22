@@ -1,36 +1,32 @@
 #include <stdio.h>
-#include "Persona.c"
+#include <stdlib.h>
+#include <time.h>
+#include "structs.h"
 
+void crear_cola(Cola *cola) {   
+     cola -> primero = cola -> ultimo = NULL;
+}
+void insertar_persona(Cola *cola,struct Persona *persona){    
+    Nodo *temporal ;    
+    temporal = (Nodo*)malloc(sizeof(Nodo));    
+    temporal -> persona = persona;    
+    temporal -> siguiente = NULL;    
+    if(cola -> primero == NULL)    {       
+         cola -> primero = temporal;    
+         }    
+         else    {        
+            cola -> ultimo -> siguiente = temporal;    
+            }    
+            cola -> ultimo = temporal;
+}
 
-Nodo * agregar_persona(Nodo *cola, struct Persona *valor){
-    Nodo *temporal = calloc(sizeof(struct Nodo),1);
-    Nodo *pivote;
-    temporal->persona = valor;
-    if (cola != NULL){
-        pivote = cola;
-        while (pivote->siguiente != NULL) { 
-            pivote = pivote->siguiente;
-        }
-        pivote->siguiente = temporal; 
-        return cola;
-    }
-    else{
-        return temporal;
-
-    }
-};
-
-Nodo * eliminar_persona(Nodo * cola){
+/*Nodo * eliminar_persona(Nodo * cola){
     cola->persona = NULL;
     cola->siguiente = NULL;
     free(cola);
 };
 
-Cola * crear_colas() {
-    Cola * cola = (Cola *) malloc(sizeof(Cola));
-    cola -> primero = cola->ultimo = NULL;
-    return cola;
-};
+
 
 struct Persona* consultar_persona (struct Cola* cola ){
     if (cola->primero){
@@ -38,14 +34,14 @@ struct Persona* consultar_persona (struct Cola* cola ){
     } else {
         return NULL;
     }
-}
-
-/*
-int main() {
-  
-    //Cola cola; 
-    crear_colas();
-    printf("Cola creada");
-   
-    return 0;
 }*/
+
+int main(){
+    Cola colaPrincipal;
+    Cola colaGym;
+    crearCola(&colaPrincipal);
+    printf("Cola creada principal\n");
+    crearCola(&colaGym);
+    printf("Cola creada gym\n");
+
+}

@@ -3,6 +3,16 @@ struct Panel {
 	int Bateria;
 };
 
+typedef struct Nodo {
+	struct Persona *persona;
+	struct Nodo *siguiente;
+}Nodo;
+
+typedef struct Cola {
+	struct Nodo *primero;
+	struct Nodo *ultimo;
+}Cola;
+
 struct Requiere {
 	char Area[10];
 	int Tiempo;
@@ -24,15 +34,7 @@ struct Persona {
     int cantidad_requiere;
 };
 
-struct Nodo {
-	struct Persona *persona;
-	struct Nodo *siguiente;
-};
 
-struct Cola {
-	struct Nodo *primero;
-	struct Nodo *ultimo;
-};
 
-typedef struct Nodo Nodo;
-typedef struct Cola Cola;
+
+

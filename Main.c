@@ -6,17 +6,28 @@
 
 #define QUANTUM 80 // Definición  del quantum a 80 unidades de tiempo.
 
-// Creación de las colas de las áreas de la Comuna.
-struct Cola *cola_Gym; 
-struct cola *cola_Recreacion;
-struct cola *cola_Taller;
-struct cola *cola_Farmacia;
-struct cola *cola_Biblioteca;
-struct cola *cola_Despensa;
-struct cola *cola_Huerto;
+// Inicializacion de las colas de las áreas de la Comuna.
+Cola *cola_principal; 
+Cola *cola_Gym; 
+Cola *cola_Recreacion;
+Cola *cola_Taller;
+Cola *cola_Farmacia;
+Cola *cola_Biblioteca;
+Cola *cola_Despensa;
+Cola *cola_Huerto;
+
+//Creacion de las colas de las areas de la comuna 
+crear_cola(&cola_principal);
+crear_cola(&cola_Gym);
+crear_cola(&cola_Recreacion);
+crear_cola(&cola_Taller);
+crear_cola(&cola_Farmacia);
+crear_cola(&cola_Biblioteca);
+crear_cola(&cola_Despensa);
+crear_cola(&cola_Huerto);
 
 // Algoritmo de planificación Round-Robin.
-void round_robin(struct Cola *cola_principal, int bateria_comuna) {
+void round_robin(Cola *cola_principal, int bateria_comuna) {
 	printf("Entré a la función)");
     int tiempo_total = 0; // Para la métrica de tiempo promedio
 	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
