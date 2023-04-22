@@ -44,6 +44,7 @@ void agregar_requiere(struct Persona *p, char *area, int tiempo, int bateria){
     strcpy(p->requiere[p->cantidad_requiere].Area, area);
     p->requiere[p->cantidad_requiere].Bateria = bateria;
     p->requiere[p->cantidad_requiere].Tiempo = tiempo;
+    p->requiere[p->cantidad_requiere].cola_area = NULL;
     p->cantidad_requiere++;
 
 }
