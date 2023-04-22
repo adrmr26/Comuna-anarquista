@@ -20,12 +20,25 @@ void insertar_persona(Cola *cola,struct Persona *persona){
             cola -> ultimo = temporal;
 }
 
-/*Nodo * eliminar_persona(Nodo * cola){
-    cola->persona = NULL;
-    cola->siguiente = NULL;
-    free(cola);
-};
+int es_vacia (Cola *cola){
+    if(cola->primero == NULL){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
+void eliminar_persona (Cola *cola){
+    Nodo * temporal;
+    if (!es_vacia(cola)){
+        temporal = cola -> primero;
+        cola -> primero = cola -> primero -> siguiente;
+        free(temporal);
+    }
+}
+
+/*
 
 
 struct Persona* consultar_persona (struct Cola* cola ){
