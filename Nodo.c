@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "structs.h"
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <time.h>
+#include "Persona.c"
 
 void crear_cola(Cola *cola) {   
      cola -> primero = cola -> ultimo = NULL;
@@ -38,9 +38,12 @@ void eliminar_persona (Cola *cola){
     }
 }
 
+// Para colocar un nodo al final de la cola.
+void colocar_al_final(Cola *cola, struct Persona *p){
+    eliminar_persona(cola);
+	insertar_persona(cola, p);
+}
 /*
-
-
 struct Persona* consultar_persona (struct Cola* cola ){
     if (cola->primero){
         return cola->primero->persona;
@@ -49,6 +52,7 @@ struct Persona* consultar_persona (struct Cola* cola ){
     }
 }*/
 
+/*
 int main(){
     Cola colaPrincipal;
     Cola colaGym;
@@ -57,4 +61,4 @@ int main(){
     crearCola(&colaGym);
     printf("Cola creada gym\n");
 
-}
+}*/
