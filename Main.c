@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <math.h>
 //#include "structs.h"
 #include "Nodo.c"
 
@@ -17,7 +18,10 @@ struct cola *cola_Huerto;
 // Algoritmo de planificación Round-Robin.
 void round_robin(struct Cola *cola_principal, int bateria_comuna) {
 	printf("Entré a la función)");
-    int tiempo_total = 0;
+    int tiempo_total = 0; // Para la métrica de tiempo promedio
+	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
+	int cantidad_tareas = 0; // Para la métrica de tiempo promedio
+	int metrica_bateria = 0; // Para la métrica de uso de batería promedio.
     int i = 0; 
 
     // Ejecutamos mientras haya personas en la cola principal. 
@@ -33,6 +37,8 @@ void round_robin(struct Cola *cola_principal, int bateria_comuna) {
 			if(p->trabaja[i].Tiempo > QUANTUM){
 				printf("tiempo mayor que el quantum\n");
 				tiempo_total += QUANTUM;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
 				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
 				p->trabaja[i].Tiempo -= QUANTUM;
 				i = 0;
@@ -43,8 +49,11 @@ void round_robin(struct Cola *cola_principal, int bateria_comuna) {
 			else{
 				printf("tiempo menor que el Quantum \n");
 				tiempo_total += p->trabaja[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
 				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
 				bateria_comuna -= p->trabaja[i].Bateria;
+				metrica_bateria += p->trabaja[i].Bateria;
 				printf("Ahora la batería total es de: %d\n",bateria_comuna);
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_trabaja(p,i);
@@ -56,38 +65,44 @@ void round_robin(struct Cola *cola_principal, int bateria_comuna) {
 		//Si lo primero en la lista de acciones de la persona es un Requiere.
 		else{
 			printf("Me salí del Trabaja\n");
-			//round_robin_auxRequiere(cola_principal, p, bateria_comuna , i, tiempo_total);
+			if(p->requiere[i].Bateria > bateria_comuna){
+				sleep(3);
+				bateria_comuna = 100;
+			}
+			// Si el tiempo es mayor al QUANTUM.
+			if(p->requiere[i].Tiempo > QUANTUM){
+				agregarPersona_ColaArea(p, p->requiere[i]);
+				tiempo_total += QUANTUM;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				p->requiere[i].Tiempo -= QUANTUM;
+				i = 0;
+				cola_principal->ultimo = cola_principal->primero;
+				cola_principal->primero = cola_principal->primero->siguiente;
+			}
+			// Si el tiempo es menor o igual al QUANTUM.
+			else{
+				tiempo_total += p->requiere[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				bateria_comuna -= p->requiere[i].Bateria;
+				metrica_bateria += p->requiere[i].Bateria;
+				eliminar_persona_colaArea(p->requiere[i].cola_area, p);
+				eliminarPalabra_listaAcciones(p,i);
+				eliminar_requiere(p,i);
+				eliminar_persona(cola_principal->primero);
+				i++;
+			}
+					
 		}
 
 	}
-}
-
-
-void round_robin_auxRequiere(struct Cola *cola_principal, struct Persona *p, int *bateria_comuna, int i, int tiempo_total){
-	char area_requiere[10];
-	if(p->requiere[i].Bateria > bateria_comuna){
-		sleep(3);
-		bateria_comuna = 100;
-	}
-	// Si el tiempo es mayor al QUANTUM.
-	if(p->requiere[i].Tiempo > QUANTUM){
-		agregarPersona_ColaArea(p, p->requiere[i]);
-		tiempo_total += QUANTUM;
-		p->requiere[i].Tiempo -= QUANTUM;
-		i = 0;
-		cola_principal->ultimo = cola_principal->primero;
-		cola_principal->primero = cola_principal->primero->siguiente;
-	}
-	// Si el tiempo es menor o igual al QUANTUM.
-	else{
-		tiempo_total += p->requiere[i].Tiempo;
-		bateria_comuna -= p->requiere[i].Bateria;
-		eliminar_persona_colaArea(p->requiere[i].cola_area, p);
-		eliminarPalabra_listaAcciones(p,i);
-		eliminar_requiere(p,i);
-		eliminar_persona(cola_principal->primero);
-		i++;
-	}
+	 // Cálculo de métrica de tiempo de espera promedio.
+	int tiempoEspera_promedio = round(tiempo_de_espera/cantidad_tareas);
+	printf("Tiempo de espera promedio = %d\n", tiempoEspera_promedio);
+	// Cálculo de métrica de uso de batería proemdio.
+	int usoDeBateria_promedio = round(metrica_bateria / cantidad_tareas);
+	printf("Uso de Bateria promedio = %d\n", usoDeBateria_promedio);
 }
 
 void agregarPersona_ColaArea(struct Persona *p, struct Requiere requiere){
