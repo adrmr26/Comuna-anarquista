@@ -8,49 +8,50 @@
 #define QUANTUM 80 // Definición  del quantum a 80 unidades de tiempo.
 
 // Inicializacion de las colas de las áreas de la Comuna.
-Cola *cola_principal; 
-Cola *cola_Gym; 
-Cola *cola_Recreacion;
-Cola *cola_Taller;
-Cola *cola_Farmacia;
-Cola *cola_Biblioteca;
-Cola *cola_Despensa;
-Cola *cola_Huerto;
+Cola cola_principal; 
+Cola cola_Gym;
+Cola cola_Recreacion;
+Cola cola_Taller;
+Cola cola_Farmacia;
+Cola cola_Biblioteca;
+Cola cola_Despensa;
+Cola cola_Huerto;
 
 
 void agregarPersona_ColaArea(struct Persona *p){
 
-	if(strcmp(p->requiere[0].Area, "Gym") ==0){
+	if(strcmp(p->requiere[0].Area, "Gym") == 0){
 		p->requiere[0].cola_area = &cola_Gym;
-		printf("PEPEPEE\n");
-		insertar_persona(cola_Gym, p);
+		insertar_persona(&cola_Gym, p);
 		printf("+++SALI DE INSERTAR PERSONA\n");
 	}
-	else if(strcmp(p->requiere[0].Area, "Recreacion") ==0){
+	else if(strcmp(p->requiere[0].Area, "Recreacion") == 0){
 		p->requiere[0].cola_area = &cola_Recreacion;
-		insertar_persona(cola_Recreacion, p);
+		insertar_persona(&cola_Recreacion, p);
 	}
-	else if(strcmp(p->requiere[0].Area, "Taller") ==0){
+	else if(strcmp(p->requiere[0].Area, "Taller") == 0){
 		p->requiere[0].cola_area = &cola_Taller;
-		insertar_persona(cola_Taller, p);
+		insertar_persona(&cola_Taller, p);
 	}
-	else if(strcmp(p->requiere[0].Area, "Farmacia") ==0){
+	else if(strcmp(p->requiere[0].Area, "Farmacia") == 0){
 		p->requiere[0].cola_area = &cola_Farmacia;
-		insertar_persona(cola_Farmacia, p);	
+		insertar_persona(&cola_Farmacia, p);	
 	}
-	else if(strcmp(p->requiere[0].Area, "Biblioteca") ==0){
+	else if(strcmp(p->requiere[0].Area, "Biblioteca") == 0){
 		p->requiere[0].cola_area = &cola_Biblioteca;
-		insertar_persona(cola_Biblioteca, p);
+		insertar_persona(&cola_Biblioteca, p);
 	}
-	else if(strcmp(p->requiere[0].Area, "Despensa") ==0){
+	else if(strcmp(p->requiere[0].Area, "Despensa") == 0){
 		p->requiere[0].cola_area = &cola_Despensa;
-		insertar_persona(cola_Despensa, p);	
+		insertar_persona(&cola_Despensa, p);	
 	}
-	else if(strcmp(p->requiere[0].Area, "Huerto") ==0){
+	else if(strcmp(p->requiere[0].Area, "Huerto") == 0){
 		p->requiere[0].cola_area = &cola_Huerto;
-		insertar_persona(cola_Huerto, p);
+		insertar_persona(&cola_Huerto, p);
+	}
+	else{
+		printf("El área no se encuentra en la Comuna\n");
 	}	
-
 }
 
 // Algoritmo de planificación Round-Robin.
@@ -108,7 +109,7 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 				printf("Ahora la batería total es de: %d\n",bateria_comuna);
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_trabaja(p,i);
-				if(i > p->cantidad_de_palabras){
+				if(i == p->cantidad_de_palabras){
 					eliminar_persona(cola_principal);
 				}
 			}
@@ -151,10 +152,11 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 				bateria_comuna -= p->requiere[i].Bateria;
 				metrica_bateria += p->requiere[i].Bateria;
 				eliminar_persona(p->requiere[i].cola_area);
-				p->requiere[i].cola_area = NULL;
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_requiere(p,i);
-				if(i > p->cantidad_de_palabras){
+				printf("Cantidad de palabras: %d\n", p->cantidad_de_palabras);
+				if(i == p->cantidad_de_palabras){
+					printf("HOLAAAA\n");
 					eliminar_persona(cola_principal);
 				}
 			}
@@ -175,6 +177,22 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 
 int main(void){
 	
+	Cola cola_gimnasio;
+	cola_Gym = cola_gimnasio;
+	Cola tall_cola;
+	cola_Taller = tall_cola;
+	Cola biblio_cola;
+	cola_Biblioteca = biblio_cola;
+	Cola huerto_cola;
+	cola_Huerto = huerto_cola;
+	Cola farmacia_cola;
+	cola_Farmacia = farmacia_cola;
+	Cola recrea_cola;
+	cola_Recreacion = recrea_cola;
+
+	Cola cola_general;
+	cola_principal = cola_general;
+
 	//Creacion de las colas de las areas de la comuna 
 	crear_cola(&cola_principal);
 	crear_cola(&cola_Gym);
@@ -242,4 +260,3 @@ int main(void){
 
 	return 0;
 }
-

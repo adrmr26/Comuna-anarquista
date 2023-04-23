@@ -15,12 +15,12 @@ void insertar_persona(Cola *cola,struct Persona *persona){
     temporal -> persona = persona;    
     temporal -> siguiente = NULL;    
     if(cola -> primero == NULL)    {       
-         cola -> primero = temporal;    
-         }    
-         else    {        
-            cola -> ultimo -> siguiente = temporal;    
-            }    
-            cola -> ultimo = temporal;
+        cola -> primero = temporal;    
+    }    
+    else {        
+        cola -> ultimo -> siguiente = temporal;    
+    }    
+    cola -> ultimo = temporal;
 }
 
 //Nos permite verificar si la cola se encuentra vacia 
