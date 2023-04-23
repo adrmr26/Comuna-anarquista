@@ -465,29 +465,118 @@ int main(void){
 	p3.cantidad_requiere = 0; // Se incializa la cantidad de Requiere
 	
 	// Persona 1
-	agregar_trabaja(&p, 80, 10);
+	agregar_trabaja(&p, 30, 2);
 	agregar_palabra_listaAcciones(&p, "Trabaja");
-    agregar_trabaja(&p, 90, 20);
+	agregar_requiere(&p, "Biblioteca", 60, 6);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_trabaja(&p, 60, 6);
 	agregar_palabra_listaAcciones(&p, "Trabaja");
-	agregar_requiere(&p, "Gym", 100, 10);
+
+	agregar_requiere(&p, "Despensa", 30, 2);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_requiere(&p, "Huerto", 20, 1);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_trabaja(&p, 60, 7);
+	agregar_palabra_listaAcciones(&p, "Trabaja");
+
+	agregar_requiere(&p, "Recreacion", 30, 3);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_requiere(&p, "Biblioteca", 30, 3);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_trabaja(&p, 60, 4);
+	agregar_palabra_listaAcciones(&p, "Trabaja");
+
+	agregar_requiere(&p, "Taller", 30, 5);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_trabaja(&p, 60, 6);
+	agregar_palabra_listaAcciones(&p, "Trabaja");
+	agregar_requiere(&p, "Recreacion", 45, 3);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+
+	agregar_requiere(&p, "Taller", 20, 2);
+	agregar_palabra_listaAcciones(&p, "Requiere");
+	agregar_trabaja(&p, 45, 7);
+	agregar_palabra_listaAcciones(&p, "Trabaja");
+	agregar_requiere(&p, "Taller", 30, 2);
 	agregar_palabra_listaAcciones(&p, "Requiere");
 
 	// Persona 2
-	agregar_trabaja(&p2, 80, 10);
+	agregar_trabaja(&p2, 15, 1);
 	agregar_palabra_listaAcciones(&p2, "Trabaja");
-    agregar_trabaja(&p2, 90, 20);
+	agregar_requiere(&p2, "Despensa", 20, 1);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+	agregar_trabaja(&p2, 60, 3);
 	agregar_palabra_listaAcciones(&p2, "Trabaja");
-	agregar_requiere(&p2, "Taller", 100, 10);
+
+	agregar_requiere(&p2, "Gym", 120, 4);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+	agregar_trabaja(&p2, 10, 1);
+	agregar_palabra_listaAcciones(&p2, "Trabaja");
+	agregar_requiere(&p2, "Huerto", 40, 4);
 	agregar_palabra_listaAcciones(&p2, "Requiere");
 
-	//Persona 3
+	agregar_trabaja(&p2, 120, 3);
+	agregar_palabra_listaAcciones(&p2, "Trabaja");
+	agregar_requiere(&p2, "Recreacion", 60, 3);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+	agregar_requiere(&p2, "Culto", 120, 5);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
 
-	agregar_trabaja(&p3, 80, 10);
-	agregar_palabra_listaAcciones(&p3, "Trabaja");
-    agregar_trabaja(&p3, 90, 20);
-	agregar_palabra_listaAcciones(&p3, "Trabaja");
-	agregar_requiere(&p3, "Recreacion", 100, 10);
+	agregar_requiere(&p2, "Biblioteca", 30, 4);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+	agregar_trabaja(&p2, 15, 1);
+	agregar_palabra_listaAcciones(&p2, "Trabaja");
+	agregar_requiere(&p2, "Despensa", 20, 2);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+
+	agregar_trabaja(&p2, 60, 3);
+	agregar_palabra_listaAcciones(&p2, "Trabaja");
+	agregar_requiere(&p2, "Farmacia", 20, 3);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
+	agregar_trabaja(&p2, 15, 1);
+	agregar_palabra_listaAcciones(&p2, "Trabaja");
+
+
+	//Persona 3
+	agregar_requiere(&p3, "Despensa", 15, 15);
 	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_trabaja(&p3, 40, 12);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+	agregar_trabaja(&p3, 8, 18);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+
+	agregar_requiere(&p3, "Despensa", 10, 11);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_trabaja(&p3, 60, 11);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+	agregar_trabaja(&p3, 30, 18);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+
+	agregar_requiere(&p3, "Despensa", 10, 11);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_requiere(&p3, "Gym", 60, 25);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_trabaja(&p3, 30, 18);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+
+	agregar_requiere(&p3, "Despensa", 10, 11);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_trabaja(&p3, 25, 20);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+	agregar_trabaja(&p3, 30, 18);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+
+	agregar_requiere(&p3, "Farmacia", 15, 11);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_requiere(&p3, "Recreacion", 30, 3);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+	agregar_requiere(&p3, "Despensa", 10, 11);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
+
+	agregar_trabaja(&p3, 15, 9);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+	agregar_trabaja(&p3, 50, 21);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
 
 	struct Persona *persona = &p;
 	struct Persona *persona2 = &p2;
@@ -497,8 +586,7 @@ int main(void){
 	insertar_persona(&cola_principal, persona2);
 	insertar_persona(&cola_principal, persona3);
 
-	//primero_llegar(&cola_principal, 100);
-	//round_robin(&cola_principal, 100);
+
 
 	int opcion;
 
