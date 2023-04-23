@@ -596,7 +596,8 @@ int main(void){
       	printf("1. Opcion Round Robin\n");
       	printf("2. Opcion Trabajo mas corto\n");
       	printf("3. Primero en llegar\n");
-      	printf("Seleccione una opcion (1-3): ");
+      	printf("4. Salir\n");
+      	printf("Seleccione una opcion (1-4): ");
       	scanf("%d", &opcion);
 
       switch(opcion) {
@@ -618,10 +619,13 @@ int main(void){
 			primero_llegar(&cola_principal,100);
 			system ("pause");
             break;
+        case 4:
+        	printf("Selecciono la opcion 4\n");
+        	exit(-1);
          default:
             printf("Opcion invalida\n");
       }
-   } while(opcion != 3);
+   } while(opcion != 4);
 
 	return 0;
 }
