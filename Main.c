@@ -190,7 +190,7 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 }
 
 
-//
+//Busca el requiere más corto que tenie la persona  y lo ejecuta 
 void Trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos) {
     int tiempo_transcurrido = 0;
     int i, j;
@@ -216,7 +216,7 @@ void Trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimien
         tiempo_transcurrido += requerimientos[i].Tiempo;
     }
 }
-//
+//Busca el trabajo máscorto de la persona y lo ejecuta
 void Trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
     int tiempo_transcurrido = 0;
     int i, j;
@@ -242,59 +242,151 @@ void Trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
         promedio_espera += tiempo_transcurrido;
     }
 }
-void Correr_Trabajo_corto(){
-	    // Definir requerimientos y trabajos
-    struct Requiere requerimientos[] = {{'A', 10, 20}, {'B', 5, 10}, {'C', 8, 15}};
-    struct Trabaja trabajos[] = {{5, 12}, {3, 7}, {7, 12}, {2, 5}};
 
-    // Ordenar requerimientos y actualizar bateria comuna 
-    int num_requerimientos = sizeof(requerimientos) / sizeof(requerimientos[0]);
-    Trabajo_corto_Requiere(requerimientos, num_requerimientos);
-    bateria_comuna -= promedio_bateria / num_requerimientos;
+//Algoritmo de trabajo más corto, este toma la la cola principal y va viendo si viene requiere o trabaja y ejecuta el menor tiempo. 
+void Correr_Trabajo_corto(Cola *cola_principal){
+	int i = 0; // índice de las listas
+	int num_requerimientos = 0;
+	int num_trabajos = 0;
+	 // Ejecutamos mientras haya personas en la cola principal. 
+    while (cola_principal->primero != NULL) {
+		struct Persona *p = cola_principal->primero->persona; 
+		//Si lo primero en la lista de acciones de la persona es un Trabaja.
+        if (strcmp(p->listaAcciones[i], "Trabaja" ) == 0) {
+			printf("Estoy ejecutando un Trabaja\n");
+			if(p->trabaja[i].Bateria > bateria_comuna){ // La batería de un trabajo no puede pasar de 100
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
+				sleep(3);
+				bateria_comuna = 100; 
+				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
+				Trabajo_corto_trabaja(p->trabaja, num_trabajos);
+				bateria_comuna -= promedio_bateria / num_trabajos;
+			}
+			else{
+				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
+				Trabajo_corto_trabaja(p->trabaja, num_trabajos);
+				bateria_comuna -= promedio_bateria / num_trabajos;
+				eliminarPalabra_listaAcciones(p,i);
+				eliminar_trabaja(p,i);
+				if(i == p->cantidad_de_palabras){
+					eliminar_persona(cola_principal);
+				}
+			}
+		}
+		//Si lo primero en la lista de acciones de la persona es un Requiere.
+		else{
+			printf("Estoy ejecutando un Requiere\n");
+			if(p->requiere[i].Bateria > bateria_comuna){
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
+				sleep(3);
+				bateria_comuna = 100;
+				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
+    			Trabajo_corto_Requiere(p->requiere, num_requerimientos);
+    			bateria_comuna -= promedio_bateria / num_requerimientos;
+			}
+			else{
+				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
+   		 		Trabajo_corto_Requiere(p->requiere, num_requerimientos);
+    			bateria_comuna -= promedio_bateria / num_requerimientos;
+				eliminar_persona(p->requiere[i].cola_area);
+				eliminarPalabra_listaAcciones(p,i);
+				eliminar_requiere(p,i);
+				if(i == p->cantidad_de_palabras){
+					eliminar_persona(cola_principal);
+				}
+			}
+					
+		}
 
-    // Ordenar trabajos y actualizar bateria comuna 
-    int num_trabajos = sizeof(trabajos) / sizeof(trabajos[0]);
-    Trabajo_corto_trabaja(trabajos, num_trabajos);
-    bateria_comuna -= promedio_bateria / num_trabajos;
-
-    // Imprimir resultados
-    printf("Promedio de espera: %f\n", promedio_espera / (num_requerimientos + num_trabajos));
+	}
+	printf("Promedio de espera: %f\n", promedio_espera / (num_requerimientos + num_trabajos));
     printf("Uso de bateria promedio: %f\n", (promedio_bateria) / (num_requerimientos + num_trabajos));
+}
+
+// Algoritmo de planificación Primero en llegar.
+void primero_llegar(Cola *cola_principal, int bateria_comuna) {
+	printf("Entré a la función Primero llegar\n");
+    int tiempo_total = 0; // Para la métrica de tiempo promedio
+	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
+	int cantidad_tareas = 0; // Para la métrica de tiempo promedio
+	int metrica_bateria = 0; // Para la métrica de uso de batería promedio.
+	int bateria_gastada = 0; // Para la métrica de uso de batería promedio.
+    int i = 0; // índice de las listas
+
+    // Ejecutamos mientras haya personas en la cola principal. 
+    while (cola_principal->primero != NULL) {
+		struct Persona *p = cola_principal->primero->persona; 
+		//Si lo primero en la lista de acciones de la persona es un Trabaja.
+        if (strcmp(p->listaAcciones[i], "Trabaja" ) == 0) {
+			printf("Estoy ejecutando un Trabaja\n");
+			if(p->trabaja[i].Bateria > bateria_comuna){ // La batería de un trabajo no puede pasar de 100
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
+				sleep(3);
+				bateria_comuna = 100; 
+			}
+			else{
+				printf("Ya voy a trabajar\n");
+				tiempo_total += p->trabaja[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
+				bateria_comuna -= p->trabaja[i].Bateria;
+				metrica_bateria += p->trabaja[i].Bateria;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
+				eliminarPalabra_listaAcciones(p,i);
+				eliminar_trabaja(p,i);
+				if(i == p->cantidad_de_palabras){
+					eliminar_persona(cola_principal);
+				}
+			}
+
+		}
+		//Si lo primero en la lista de acciones de la persona es un Requiere.
+		else{
+			printf("Estoy ejecutando un Requiere\n");
+			if(p->requiere[i].Bateria > bateria_comuna){
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
+				sleep(3);
+				bateria_comuna = 100;
+			}
+			else{
+				printf("Ya regreso voy por un requiere\n");
+				tiempo_total += p->requiere[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
+				bateria_comuna -= p->requiere[i].Bateria;
+				metrica_bateria += p->requiere[i].Bateria;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
+				eliminar_persona(p->requiere[i].cola_area);
+				eliminarPalabra_listaAcciones(p,i);
+				eliminar_requiere(p,i);
+				if(i == p->cantidad_de_palabras){
+					eliminar_persona(cola_principal);
+				}
+			}
+					
+		}
+
+	}
+	printf("\n");
+	printf("El tiempo total es = %d\n", tiempo_total);
+	printf("El uso de batería total es de: %d\n", metrica_bateria);
+	printf("Cantidad de tareas = %d\n", cantidad_tareas);
+	// Cálculo de métrica de tiempo de espera promedio.
+	int tiempoEspera_promedio = round(tiempo_de_espera/cantidad_tareas);
+	printf("Tiempo de espera promedio = %d\n", tiempoEspera_promedio);
+	// Cálculo de métrica de uso de batería proemdio.
+	int usoDeBateria_promedio = round(metrica_bateria / cantidad_tareas);
+	printf("Uso de Bateria promedio = %d\n", usoDeBateria_promedio);
 }
 
     
 
 
 int main(void){
-	 int opcion;
-
-   do {
-   	system("cls"); 
-      printf("Menu:\n");
-      printf("1. Opcion Round Robin\n");
-      printf("2. Opcion Trabajo mas corto\n");
-      printf("3. Opcion 3\n");
-      printf("Seleccione una opcion (1-3): ");
-      scanf("%d", &opcion);
-
-      switch(opcion) {
-         case 1:
-            printf("Selecciono la opcion 1\n");
-            break;
-         case 2:
-            printf("Selecciono la opcion 2\n");
-            system("cls"); 
-            Correr_Trabajo_corto();
-            system ("pause");
-            break;
-         case 3:
-            printf("Selecciono la opcion 3\n");
-            break;
-         default:
-            printf("Opcion invalida\n");
-      }
-   } while(opcion != 3);
-	
 	Cola cola_gimnasio;
 	cola_Gym = cola_gimnasio;
 	Cola tall_cola;
@@ -385,7 +477,37 @@ int main(void){
 	insertar_persona(&cola_principal, persona2);
 	insertar_persona(&cola_principal, persona3);
 
-	round_robin(&cola_principal, 100);
+	primero_llegar(&cola_principal, 100);
+	//round_robin(&cola_principal, 100);
+
+	int opcion;
+
+   do {
+   	system("cls"); 
+      printf("Menu:\n");
+      printf("1. Opcion Round Robin\n");
+      printf("2. Opcion Trabajo mas corto\n");
+      printf("3. Opcion 3\n");
+      printf("Seleccione una opcion (1-3): ");
+      scanf("%d", &opcion);
+
+      switch(opcion) {
+         case 1:
+            printf("Selecciono la opcion 1\n");
+            break;
+         case 2:
+            printf("Selecciono la opcion 2\n");
+            system("cls"); 
+            Correr_Trabajo_corto(&cola_principal);
+            system ("pause");
+            break;
+         case 3:
+            printf("Selecciono la opcion 3\n");
+            break;
+         default:
+            printf("Opcion invalida\n");
+      }
+   } while(opcion != 3);
 
 	return 0;
 }
