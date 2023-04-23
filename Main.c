@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <math.h>
 #include <string.h>
 #include "Nodo.c"
 
 #define QUANTUM 80 // Definición  del quantum a 80 unidades de tiempo.
+double promedio_espera = 0.0;
+double promedio_bateria = 0.0;
+int bateria_comuna = 100;
+
 
 // Inicializacion de las colas de las áreas de la Comuna.
 Cola cola_principal; 
@@ -186,9 +190,110 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 }
 
 
+//
+void Trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos) {
+    int tiempo_transcurrido = 0;
+    int i, j;
+    for (i = 0; i < num_requerimientos; i++) {
+        // Encontrar el requerimiento con el menor tiempo de ejecucion
+        int min_tiempo = requerimientos[i].Tiempo;
+        int min_index = i;
+        for (j = i+1; j < num_requerimientos; j++) {
+            if (requerimientos[j].Tiempo < min_tiempo) {
+                min_tiempo = requerimientos[j].Tiempo;
+                min_index = j;
+            }
+        }
+        // Intercambiar los requerimientos en el array
+        struct Requiere temp = requerimientos[i];
+        requerimientos[i] = requerimientos[min_index];
+        requerimientos[min_index] = temp;
+
+        // Ejecutar el requerimiento y actualizar la bateria en la comuna 
+        promedio_espera += tiempo_transcurrido;
+        promedio_bateria += bateria_comuna;
+        bateria_comuna -= requerimientos[i].Bateria;
+        tiempo_transcurrido += requerimientos[i].Tiempo;
+    }
+}
+//
+void Trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
+    int tiempo_transcurrido = 0;
+    int i, j;
+    for (i = 0; i < num_trabajos; i++) {
+        // Encontrar el trabajo con el menor tiempo de ejecucion
+        int min_tiempo = trabajos[i].Tiempo;
+        int min_index = i;
+        for (j = i+1; j < num_trabajos; j++) {
+            if (trabajos[j].Tiempo < min_tiempo) {
+                min_tiempo = trabajos[j].Tiempo;
+                min_index = j;
+            }
+        }
+        // Intercambiar los trabajos en el array
+        struct Trabaja temp = trabajos[i];
+        trabajos[i] = trabajos[min_index];
+        trabajos[min_index] = temp;
+
+        // Ejecutar el trabajo y actualizar la bateria comuna 
+        promedio_bateria += bateria_comuna;
+        bateria_comuna -= trabajos[i].Bateria;
+        tiempo_transcurrido += trabajos[i].Tiempo;
+        promedio_espera += tiempo_transcurrido;
+    }
+}
+void Correr_Trabajo_corto(){
+	    // Definir requerimientos y trabajos
+    struct Requiere requerimientos[] = {{'A', 10, 20}, {'B', 5, 10}, {'C', 8, 15}};
+    struct Trabaja trabajos[] = {{5, 12}, {3, 7}, {7, 12}, {2, 5}};
+
+    // Ordenar requerimientos y actualizar bateria comuna 
+    int num_requerimientos = sizeof(requerimientos) / sizeof(requerimientos[0]);
+    Trabajo_corto_Requiere(requerimientos, num_requerimientos);
+    bateria_comuna -= promedio_bateria / num_requerimientos;
+
+    // Ordenar trabajos y actualizar bateria comuna 
+    int num_trabajos = sizeof(trabajos) / sizeof(trabajos[0]);
+    Trabajo_corto_trabaja(trabajos, num_trabajos);
+    bateria_comuna -= promedio_bateria / num_trabajos;
+
+    // Imprimir resultados
+    printf("Promedio de espera: %f\n", promedio_espera / (num_requerimientos + num_trabajos));
+    printf("Uso de bateria promedio: %f\n", (promedio_bateria) / (num_requerimientos + num_trabajos));
+}
+
+    
 
 
 int main(void){
+	 int opcion;
+
+   do {
+   	system("cls"); 
+      printf("Menu:\n");
+      printf("1. Opcion Round Robin\n");
+      printf("2. Opcion Trabajo mas corto\n");
+      printf("3. Opcion 3\n");
+      printf("Seleccione una opcion (1-3): ");
+      scanf("%d", &opcion);
+
+      switch(opcion) {
+         case 1:
+            printf("Selecciono la opcion 1\n");
+            break;
+         case 2:
+            printf("Selecciono la opcion 2\n");
+            system("cls"); 
+            Correr_Trabajo_corto();
+            system ("pause");
+            break;
+         case 3:
+            printf("Selecciono la opcion 3\n");
+            break;
+         default:
+            printf("Opcion invalida\n");
+      }
+   } while(opcion != 3);
 	
 	Cola cola_gimnasio;
 	cola_Gym = cola_gimnasio;
