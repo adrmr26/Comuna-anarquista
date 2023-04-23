@@ -234,17 +234,17 @@ void trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
         struct Trabaja temp = trabajos[i];
         trabajos[i] = trabajos[min_index];
         trabajos[min_index] = temp;
-
-        // Ejecutar el trabajo y actualizar la bateria comuna 
-        promedio_bateria += bateria_comuna;
-        bateria_comuna -= trabajos[i].Bateria;
-        tiempo_transcurrido += trabajos[i].Tiempo;
-        promedio_espera += tiempo_transcurrido;
     }
 }
 
 //Algoritmo de trabajo más corto, este toma la la cola principal y va viendo si viene requiere o trabaja y ejecuta el menor tiempo. 
 void correr_Trabajo_corto(Cola *cola_principal){
+	int tiempo_total = 0; // Para la métrica de tiempo promedio
+	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
+	int cantidad_tareas = 0; // Para la métrica de tiempo promedio
+	int metrica_bateria = 0; // Para la métrica de uso de batería promedio.
+	int bateria_gastada = 0; // Para la métrica de uso de batería promedio.
+
 	int i = 0; // índice de las listas
 	int num_requerimientos = 0;
 	int num_trabajos = 0;
@@ -258,11 +258,17 @@ void correr_Trabajo_corto(Cola *cola_principal){
 				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
 				sleep(3);
 				bateria_comuna = 100; 
-				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
-				trabajo_corto_trabaja(p->trabaja, num_trabajos);
-				bateria_comuna -= promedio_bateria / num_trabajos;
 			}
 			else{
+				tiempo_total += p->trabaja[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
+				bateria_comuna -= p->trabaja[i].Bateria;
+				metrica_bateria += p->trabaja[i].Bateria;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
+
 				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
 				trabajo_corto_trabaja(p->trabaja, num_trabajos);
 				bateria_comuna -= promedio_bateria / num_trabajos;
@@ -280,11 +286,16 @@ void correr_Trabajo_corto(Cola *cola_principal){
 				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
 				sleep(3);
 				bateria_comuna = 100;
-				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
-    			trabajo_corto_Requiere(p->requiere, num_requerimientos);
-    			bateria_comuna -= promedio_bateria / num_requerimientos;
 			}
 			else{
+				tiempo_total += p->requiere[i].Tiempo;
+				tiempo_de_espera += tiempo_total;
+				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
+				bateria_comuna -= p->requiere[i].Bateria;
+				metrica_bateria += p->requiere[i].Bateria;
+
 				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
    		 		trabajo_corto_Requiere(p->requiere, num_requerimientos);
     			bateria_comuna -= promedio_bateria / num_requerimientos;
@@ -299,9 +310,18 @@ void correr_Trabajo_corto(Cola *cola_principal){
 		}
 
 	}
-	printf("Promedio de espera: %f\n", promedio_espera / (num_requerimientos + num_trabajos));
-    printf("Uso de bateria promedio: %f\n", (promedio_bateria) / (num_requerimientos + num_trabajos));
+	printf("\n");
+	printf("El tiempo total es = %d\n", tiempo_total);
+	printf("El uso de batería total es de: %d\n", metrica_bateria);
+	printf("Cantidad de tareas = %d\n", cantidad_tareas);
+	// Cálculo de métrica de tiempo de espera promedio.
+	int tiempoEspera_promedio = round(tiempo_de_espera/cantidad_tareas);
+	printf("Tiempo de espera promedio = %d\n", tiempoEspera_promedio);
+	// Cálculo de métrica de uso de batería proemdio.
+	int usoDeBateria_promedio = round(metrica_bateria / cantidad_tareas);
+	printf("Uso de Bateria promedio = %d\n", usoDeBateria_promedio);
 }
+
 
 // Algoritmo de planificación Primero en llegar.
 void primero_llegar(Cola *cola_principal, int bateria_comuna) {
@@ -496,6 +516,7 @@ int main(void){
             printf("Selecciono la opcion 1\n");
 			system("cls"); 
 			round_robin(&cola_principal, 100);
+			system ("pause");
             break;
          case 2:
             printf("Selecciono la opcion 2\n");
@@ -505,7 +526,9 @@ int main(void){
             break;
          case 3:
             printf("Selecciono la opcion 3\n");
+            system("cls");
 			primero_llegar(&cola_principal,100);
+			system ("pause");
             break;
          default:
             printf("Opcion invalida\n");
