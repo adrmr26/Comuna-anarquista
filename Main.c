@@ -23,40 +23,46 @@ void agregarPersona_ColaArea(struct Persona *p){
 	if(strcmp(p->requiere[0].Area, "Gym") == 0){
 		p->requiere[0].cola_area = &cola_Gym;
 		insertar_persona(&cola_Gym, p);
-		printf("+++SALI DE INSERTAR PERSONA\n");
+		printf("*** Se insertó la persona en la cola GYM ***\n");
 	}
 	else if(strcmp(p->requiere[0].Area, "Recreacion") == 0){
 		p->requiere[0].cola_area = &cola_Recreacion;
 		insertar_persona(&cola_Recreacion, p);
+		printf("*** Se insertó la persona en la cola RECREACION ***\n");
 	}
 	else if(strcmp(p->requiere[0].Area, "Taller") == 0){
 		p->requiere[0].cola_area = &cola_Taller;
 		insertar_persona(&cola_Taller, p);
+		printf("*** Se insertó la persona en la cola TALLER ***\n");
 	}
 	else if(strcmp(p->requiere[0].Area, "Farmacia") == 0){
 		p->requiere[0].cola_area = &cola_Farmacia;
-		insertar_persona(&cola_Farmacia, p);	
+		insertar_persona(&cola_Farmacia, p);
+		printf("*** Se insertó la persona en la cola FARMACIA ***\n");	
 	}
 	else if(strcmp(p->requiere[0].Area, "Biblioteca") == 0){
 		p->requiere[0].cola_area = &cola_Biblioteca;
 		insertar_persona(&cola_Biblioteca, p);
+		printf("*** Se insertó la persona en la cola BIBLIOTECA ***\n");
 	}
 	else if(strcmp(p->requiere[0].Area, "Despensa") == 0){
 		p->requiere[0].cola_area = &cola_Despensa;
-		insertar_persona(&cola_Despensa, p);	
+		insertar_persona(&cola_Despensa, p);
+		printf("*** Se insertó la persona en la cola DESPENSA ***\n");	
 	}
 	else if(strcmp(p->requiere[0].Area, "Huerto") == 0){
 		p->requiere[0].cola_area = &cola_Huerto;
 		insertar_persona(&cola_Huerto, p);
+		printf("*** Se insertó la persona en la cola HUERTO ***\n");
 	}
 	else{
-		printf("El área no se encuentra en la Comuna\n");
+		printf("ERROR: El área no se encuentra en la Comuna\n");
 	}	
 }
 
 // Algoritmo de planificación Round-Robin.
 void round_robin(Cola *cola_principal, int bateria_comuna) {
-	printf("Entré a la función\n");
+	printf("Entré a la función Round Robin\n");
     int tiempo_total = 0; // Para la métrica de tiempo promedio
 	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
 	int cantidad_tareas = 0; // Para la métrica de tiempo promedio
@@ -69,14 +75,15 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 		struct Persona *p = cola_principal->primero->persona; 
 		//Si lo primero en la lista de acciones de la persona es un Trabaja.
         if (strcmp(p->listaAcciones[i], "Trabaja" ) == 0) {
-			printf("Estoy ejecutando un trabaja\n");
+			printf("Estoy ejecutando un Trabaja\n");
 			if(p->trabaja[i].Bateria > bateria_comuna){ // La batería de un trabajo no puede pasar de 100
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
 				sleep(3);
 				bateria_comuna = 100; 
 			}
 			// Si el tiempo es mayor al QUANTUM.
 			if(p->trabaja[i].Tiempo > QUANTUM){
-				printf("tiempo mayor que el quantum\n");
+				printf("TRABAJA: tiempo mayor que el Quantum\n");
 				tiempo_total += QUANTUM;
 				tiempo_de_espera += tiempo_total;
 				cantidad_tareas += 1;
@@ -86,27 +93,25 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 				p->trabaja[i].Bateria -= bateria_gastada;
 				metrica_bateria += bateria_gastada;
 				bateria_comuna -= bateria_gastada;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
 				p->trabaja[i].Tiempo -= QUANTUM;
 				// Si el primero NO es el único nodo en la cola principal entonces coloquelo al final. 
 				if(cola_principal->primero->siguiente != NULL){
 					printf("*****Entro en pasar al último de la cola principal\n");
 					colocar_al_final(cola_principal, p);
-					printf("++++++Ahora el primero de la cola tiene un tiempo de: %d\n", cola_principal->primero->persona->trabaja[i].Tiempo);
-					printf("--------Ahora el ultimo de la cola tiene un tiempo de: %d\n", cola_principal->ultimo->persona->trabaja[i].Tiempo);
 				}
 			}
 			// Si el tiempo es menor o igual al QUANTUM.
 			else{
-				printf("tiempo menor que el Quantum\n");
+				printf("TRABAJA: tiempo menor que el Quantum\n");
 				tiempo_total += p->trabaja[i].Tiempo;
-				printf("Ahora el tiempo de la tarea es de %d\n", p->trabaja[i].Tiempo);
 				tiempo_de_espera += tiempo_total;
 				cantidad_tareas += 1;
 				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
 				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
 				bateria_comuna -= p->trabaja[i].Bateria;
 				metrica_bateria += p->trabaja[i].Bateria;
-				printf("Ahora la batería total es de: %d\n",bateria_comuna);
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_trabaja(p,i);
 				if(i == p->cantidad_de_palabras){
@@ -119,44 +124,48 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 		else{
 			printf("Estoy ejecutando un Requiere\n");
 			if(p->requiere[i].Bateria > bateria_comuna){
+				printf("+++ Haciendo espera de 3 segundos para recargar la batería +++\n");
 				sleep(3);
 				bateria_comuna = 100;
 			}
 			// Si el tiempo es mayor al QUANTUM.
 			if(p->requiere[i].Tiempo > QUANTUM){
-				printf("*********Estoy en Requiere tiempo mayor al Quantum\n");
+				printf("REQUIERE: tiempo mayor que el Quantum\n");
 				if(p->requiere[i].cola_area == NULL){
 					agregarPersona_ColaArea(p);
 				}
 				tiempo_total += QUANTUM;
 				tiempo_de_espera += tiempo_total;
 				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
 				bateria_gastada = (floor((QUANTUM * (p->requiere[i].Bateria))/p->requiere[i].Tiempo));
 				p->requiere[i].Bateria -= bateria_gastada;
 				metrica_bateria += bateria_gastada;
 				bateria_comuna -= bateria_gastada;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
 				p->requiere[i].Tiempo -= QUANTUM;
 				// Si el primero NO es el único nodo en la cola principal entonces coloquelo al final. 
 				if(cola_principal->primero->siguiente != NULL){
 					printf("*****Entro en pasar al último de la cola principal\n");
 					colocar_al_final(cola_principal, p);
-					printf("++++++Ahora el primero de la cola tiene un tiempo de: %d\n", cola_principal->primero->persona->trabaja[i].Tiempo);
-					printf("--------Ahora el ultimo de la cola tiene un tiempo de: %d\n", cola_principal->ultimo->persona->trabaja[i].Tiempo);
 				}
 			}
 			// Si el tiempo es menor o igual al QUANTUM.
 			else{
+				printf("REQUIERE: Tiempo menor al Quantum\n");
 				tiempo_total += p->requiere[i].Tiempo;
 				tiempo_de_espera += tiempo_total;
 				cantidad_tareas += 1;
+				printf("Ahora el tiempo total es de: %d\n",tiempo_total);
+				printf("Ahora el tiempo de espera es de: %d\n", tiempo_de_espera);
 				bateria_comuna -= p->requiere[i].Bateria;
 				metrica_bateria += p->requiere[i].Bateria;
+				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
 				eliminar_persona(p->requiere[i].cola_area);
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_requiere(p,i);
-				printf("Cantidad de palabras: %d\n", p->cantidad_de_palabras);
 				if(i == p->cantidad_de_palabras){
-					printf("HOLAAAA\n");
 					eliminar_persona(cola_principal);
 				}
 			}
@@ -164,6 +173,10 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 		}
 
 	}
+	printf("\n");
+	printf("El tiempo total es = %d\n", tiempo_total);
+	printf("El uso de batería total es de: %d\n", metrica_bateria);
+	printf("Cantidad de tareas = %d\n", cantidad_tareas);
 	// Cálculo de métrica de tiempo de espera promedio.
 	int tiempoEspera_promedio = round(tiempo_de_espera/cantidad_tareas);
 	printf("Tiempo de espera promedio = %d\n", tiempoEspera_promedio);
@@ -217,10 +230,11 @@ int main(void){
 	p.requiere = malloc(0);
 
 	p2.trabaja = malloc(0);
-
+	p2.requiere = malloc(0);
+	
 	p3.trabaja = malloc(0);
 	p3.requiere = malloc(0);
-    //p.requiere = malloc(0);
+
     p.cantidad_de_palabras = 0; // Se inicializan la cantidad de palabras 
 	p2.cantidad_de_palabras = 0; 
 	p3.cantidad_de_palabras = 0; 
@@ -230,7 +244,10 @@ int main(void){
 	p3.cantidad_trabaja = 0;
 
     p.cantidad_requiere = 0; // Se incializa la cantidad de Requiere
+	p2.cantidad_requiere = 0; // Se incializa la cantidad de Requiere
+	p3.cantidad_requiere = 0; // Se incializa la cantidad de Requiere
 	
+	// Persona 1
 	agregar_trabaja(&p, 80, 10);
 	agregar_palabra_listaAcciones(&p, "Trabaja");
     agregar_trabaja(&p, 90, 20);
@@ -238,23 +255,30 @@ int main(void){
 	agregar_requiere(&p, "Gym", 100, 10);
 	agregar_palabra_listaAcciones(&p, "Requiere");
 
-/*   // Persona 2
-	agregar_trabaja(&p2, 100, 10);
+	// Persona 2
+	agregar_trabaja(&p2, 80, 10);
 	agregar_palabra_listaAcciones(&p2, "Trabaja");
-	agregar_trabaja(&p2, 120, 20);
+    agregar_trabaja(&p2, 90, 20);
 	agregar_palabra_listaAcciones(&p2, "Trabaja");
+	agregar_requiere(&p2, "Taller", 100, 10);
+	agregar_palabra_listaAcciones(&p2, "Requiere");
 
 	//Persona 3
-	agregar_trabaja(&p3, 90, 10);
-	agregar_palabra_listaAcciones(&p3, "Trabaja");*/
+
+	agregar_trabaja(&p3, 80, 10);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+    agregar_trabaja(&p3, 90, 20);
+	agregar_palabra_listaAcciones(&p3, "Trabaja");
+	agregar_requiere(&p3, "Recreacion", 100, 10);
+	agregar_palabra_listaAcciones(&p3, "Requiere");
 
 	struct Persona *persona = &p;
-	//struct Persona *persona2 =&p2;
-	//struct Persona *persona3 =&p3;
+	struct Persona *persona2 = &p2;
+	struct Persona *persona3 = &p3;
 
 	insertar_persona(&cola_principal, persona);
-	//insertar_persona(&cola_principal, persona2);
-	//insertar_persona(&cola_principal, persona3);
+	insertar_persona(&cola_principal, persona2);
+	insertar_persona(&cola_principal, persona3);
 
 	round_robin(&cola_principal, 100);
 
