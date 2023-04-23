@@ -3,9 +3,12 @@
 #include <time.h>
 #include "structs.h"
 
+//Crea la cola , dandole un valor al primer nodo y al ultimo 
 void crear_cola(Cola *cola) {   
      cola -> primero = cola -> ultimo = NULL;
 }
+
+//Inserta una persona  a la cola que se reciba 
 void insertar_persona(Cola *cola,struct Persona *persona){    
     Nodo *temporal ;    
     temporal = (Nodo*)malloc(sizeof(Nodo));    
@@ -20,6 +23,7 @@ void insertar_persona(Cola *cola,struct Persona *persona){
             cola -> ultimo = temporal;
 }
 
+//Nos permite verificar si la cola se encuentra vacia 
 int es_vacia (Cola *cola){
     if(cola->primero == NULL){
         return 1;
@@ -29,6 +33,8 @@ int es_vacia (Cola *cola){
     }
 }
 
+//Elimina el nodo que se creo de primero , de esta forma se da valor al
+//funcionamiento de una cola.
 void eliminar_persona (Cola *cola){
     Nodo * temporal;
     if (!es_vacia(cola)){
