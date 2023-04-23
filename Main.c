@@ -8,6 +8,8 @@
 #define QUANTUM 80 // Definición  del quantum a 80 unidades de tiempo.
 double promedio_espera = 0.0;
 double promedio_bateria = 0.0;
+int bateria_comuna = 100;
+
 
 // Inicializacion de las colas de las áreas de la Comuna.
 Cola cola_principal; 
@@ -189,7 +191,7 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 
 
 //Busca el requiere más corto que tenie la persona  y lo ejecuta 
-void trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos, int bateria_comuna) {
+void trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos) {
     int tiempo_transcurrido = 0;
     int i, j;
     for (i = 0; i < num_requerimientos; i++) {
@@ -236,7 +238,7 @@ void trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
 }
 
 //Algoritmo de trabajo más corto, este toma la la cola principal y va viendo si viene requiere o trabaja y ejecuta el menor tiempo. 
-void correr_Trabajo_corto(Cola *cola_principal,int bateria_comuna ){
+void correr_Trabajo_corto(Cola *cola_principal){
 	int tiempo_total = 0; // Para la métrica de tiempo promedio
 	int tiempo_de_espera = 0; // Para la métrica de tiempo promedio
 	int cantidad_tareas = 0; // Para la métrica de tiempo promedio
@@ -295,7 +297,7 @@ void correr_Trabajo_corto(Cola *cola_principal,int bateria_comuna ){
 				metrica_bateria += p->requiere[i].Bateria;
 
 				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
-   		 		trabajo_corto_Requiere(p->requiere, num_requerimientos,bateria_comuna);
+   		 		trabajo_corto_Requiere(p->requiere, num_requerimientos);
     			bateria_comuna -= promedio_bateria / num_requerimientos;
 				eliminar_persona(p->requiere[i].cola_area);
 				eliminarPalabra_listaAcciones(p,i);
@@ -405,7 +407,6 @@ void primero_llegar(Cola *cola_principal, int bateria_comuna) {
 
 
 int main(void){
-
 	Cola cola_gimnasio;
 	cola_Gym = cola_gimnasio;
 	Cola tall_cola;
@@ -432,8 +433,7 @@ int main(void){
 	crear_cola(&cola_Despensa);
 	crear_cola(&cola_Huerto);
 
-	struct Panel * bateria_comuna;
-	bateria_comuna->Bateria = 100;
+
 	struct Persona p;
 	struct Persona p2;
 	struct Persona p3;
@@ -497,6 +497,9 @@ int main(void){
 	insertar_persona(&cola_principal, persona2);
 	insertar_persona(&cola_principal, persona3);
 
+	//primero_llegar(&cola_principal, 100);
+	//round_robin(&cola_principal, 100);
+
 	int opcion;
 
    	do {
@@ -512,19 +515,19 @@ int main(void){
          case 1:
             printf("Selecciono la opcion 1\n");
 			system("cls"); 
-			round_robin(&cola_principal, bateria_comuna->Bateria);
+			round_robin(&cola_principal, 100);
 			system ("pause");
             break;
          case 2:
             printf("Selecciono la opcion 2\n");
             system("cls"); 
-            correr_Trabajo_corto(&cola_principal,bateria_comuna);
+            correr_Trabajo_corto(&cola_principal);
             system ("pause");
             break;
          case 3:
             printf("Selecciono la opcion 3\n");
             system("cls");
-			primero_llegar(&cola_principal,bateria_comuna->Bateria);
+			primero_llegar(&cola_principal,100);
 			system ("pause");
             break;
          default:
