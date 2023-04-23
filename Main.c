@@ -8,8 +8,6 @@
 #define QUANTUM 80 // Definición  del quantum a 80 unidades de tiempo.
 double promedio_espera = 0.0;
 double promedio_bateria = 0.0;
-int bateria_comuna = 100;
-
 
 // Inicializacion de las colas de las áreas de la Comuna.
 Cola cola_principal; 
@@ -433,7 +431,8 @@ int main(void){
 	crear_cola(&cola_Despensa);
 	crear_cola(&cola_Huerto);
 
-
+	struct Panel * bateria_comuna;
+	bateria_comuna->Bateria = 100;
 	struct Persona p;
 	struct Persona p2;
 	struct Persona p3;
@@ -515,7 +514,7 @@ int main(void){
          case 1:
             printf("Selecciono la opcion 1\n");
 			system("cls"); 
-			round_robin(&cola_principal, 100);
+			round_robin(&cola_principal, bateria_comuna->Bateria);
 			system ("pause");
             break;
          case 2:
@@ -527,7 +526,7 @@ int main(void){
          case 3:
             printf("Selecciono la opcion 3\n");
             system("cls");
-			primero_llegar(&cola_principal,100);
+			primero_llegar(&cola_principal,bateria_comuna->Bateria);
 			system ("pause");
             break;
          default:
