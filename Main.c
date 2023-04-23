@@ -191,7 +191,7 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 
 
 //Busca el requiere más corto que tenie la persona  y lo ejecuta 
-void Trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos) {
+void trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimientos) {
     int tiempo_transcurrido = 0;
     int i, j;
     for (i = 0; i < num_requerimientos; i++) {
@@ -217,7 +217,7 @@ void Trabajo_corto_Requiere(struct Requiere* requerimientos, int num_requerimien
     }
 }
 //Busca el trabajo máscorto de la persona y lo ejecuta
-void Trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
+void trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
     int tiempo_transcurrido = 0;
     int i, j;
     for (i = 0; i < num_trabajos; i++) {
@@ -244,7 +244,7 @@ void Trabajo_corto_trabaja(struct Trabaja* trabajos, int num_trabajos) {
 }
 
 //Algoritmo de trabajo más corto, este toma la la cola principal y va viendo si viene requiere o trabaja y ejecuta el menor tiempo. 
-void Correr_Trabajo_corto(Cola *cola_principal){
+void correr_Trabajo_corto(Cola *cola_principal){
 	int i = 0; // índice de las listas
 	int num_requerimientos = 0;
 	int num_trabajos = 0;
@@ -259,12 +259,12 @@ void Correr_Trabajo_corto(Cola *cola_principal){
 				sleep(3);
 				bateria_comuna = 100; 
 				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
-				Trabajo_corto_trabaja(p->trabaja, num_trabajos);
+				trabajo_corto_trabaja(p->trabaja, num_trabajos);
 				bateria_comuna -= promedio_bateria / num_trabajos;
 			}
 			else{
 				num_trabajos = sizeof(p->trabaja) / sizeof(p->trabaja[0]);
-				Trabajo_corto_trabaja(p->trabaja, num_trabajos);
+				trabajo_corto_trabaja(p->trabaja, num_trabajos);
 				bateria_comuna -= promedio_bateria / num_trabajos;
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_trabaja(p,i);
@@ -281,12 +281,12 @@ void Correr_Trabajo_corto(Cola *cola_principal){
 				sleep(3);
 				bateria_comuna = 100;
 				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
-    			Trabajo_corto_Requiere(p->requiere, num_requerimientos);
+    			trabajo_corto_Requiere(p->requiere, num_requerimientos);
     			bateria_comuna -= promedio_bateria / num_requerimientos;
 			}
 			else{
 				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
-   		 		Trabajo_corto_Requiere(p->requiere, num_requerimientos);
+   		 		trabajo_corto_Requiere(p->requiere, num_requerimientos);
     			bateria_comuna -= promedio_bateria / num_requerimientos;
 				eliminar_persona(p->requiere[i].cola_area);
 				eliminarPalabra_listaAcciones(p,i);
@@ -477,32 +477,35 @@ int main(void){
 	insertar_persona(&cola_principal, persona2);
 	insertar_persona(&cola_principal, persona3);
 
-	primero_llegar(&cola_principal, 100);
+	//primero_llegar(&cola_principal, 100);
 	//round_robin(&cola_principal, 100);
 
 	int opcion;
 
-   do {
-   	system("cls"); 
-      printf("Menu:\n");
-      printf("1. Opcion Round Robin\n");
-      printf("2. Opcion Trabajo mas corto\n");
-      printf("3. Opcion 3\n");
-      printf("Seleccione una opcion (1-3): ");
-      scanf("%d", &opcion);
+   	do {
+		system("cls"); 
+		printf("Menu:\n");
+      	printf("1. Opcion Round Robin\n");
+      	printf("2. Opcion Trabajo mas corto\n");
+      	printf("3. Primero en llegar\n");
+      	printf("Seleccione una opcion (1-3): ");
+      	scanf("%d", &opcion);
 
       switch(opcion) {
          case 1:
             printf("Selecciono la opcion 1\n");
+			system("cls"); 
+			round_robin(&cola_principal, 100);
             break;
          case 2:
             printf("Selecciono la opcion 2\n");
             system("cls"); 
-            Correr_Trabajo_corto(&cola_principal);
+            correr_Trabajo_corto(&cola_principal);
             system ("pause");
             break;
          case 3:
             printf("Selecciono la opcion 3\n");
+			primero_llegar(&cola_principal,100);
             break;
          default:
             printf("Opcion invalida\n");
