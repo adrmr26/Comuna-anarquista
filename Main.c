@@ -20,6 +20,7 @@ Cola cola_Farmacia;
 Cola cola_Biblioteca;
 Cola cola_Despensa;
 Cola cola_Huerto;
+Cola cola_Culto;
 
 
 void agregarPersona_ColaArea(struct Persona *p){
@@ -58,6 +59,11 @@ void agregarPersona_ColaArea(struct Persona *p){
 		p->requiere[0].cola_area = &cola_Huerto;
 		insertar_persona(&cola_Huerto, p);
 		printf("*** Se insertó la persona en la cola HUERTO ***\n");
+	}
+	else if(strcmp(p->requiere[0].Area, "Culto") == 0){
+		p->requiere[0].cola_area = &cola_Culto;
+		insertar_persona(&cola_Culto, p);
+		printf("*** Se insertó la persona en la cola CULTO ***\n");
 	}
 	else{
 		printf("ERROR: El área no se encuentra en la Comuna\n");
@@ -166,7 +172,9 @@ void round_robin(Cola *cola_principal, int bateria_comuna) {
 				bateria_comuna -= p->requiere[i].Bateria;
 				metrica_bateria += p->requiere[i].Bateria;
 				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
-				eliminar_persona(p->requiere[i].cola_area);
+				if (p->requiere->cola_area != NULL){
+					eliminar_persona(p->requiere[i].cola_area);
+				}
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_requiere(p,i);
 				if(i == p->cantidad_de_palabras){
@@ -299,7 +307,9 @@ void correr_Trabajo_corto(Cola *cola_principal){
 				num_requerimientos = sizeof(p->requiere) / sizeof(p->requiere[0]);
    		 		trabajo_corto_Requiere(p->requiere, num_requerimientos);
     			bateria_comuna -= promedio_bateria / num_requerimientos;
-				eliminar_persona(p->requiere[i].cola_area);
+				if (p->requiere->cola_area != NULL){
+					eliminar_persona(p->requiere[i].cola_area);
+				}
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_requiere(p,i);
 				if(i == p->cantidad_de_palabras){
@@ -380,7 +390,9 @@ void primero_llegar(Cola *cola_principal, int bateria_comuna) {
 				bateria_comuna -= p->requiere[i].Bateria;
 				metrica_bateria += p->requiere[i].Bateria;
 				printf("Ahora la batería de la comuna es de: %d\n",bateria_comuna);
-				eliminar_persona(p->requiere[i].cola_area);
+				if (p->requiere->cola_area != NULL){
+					eliminar_persona(p->requiere[i].cola_area);
+				}
 				eliminarPalabra_listaAcciones(p,i);
 				eliminar_requiere(p,i);
 				if(i == p->cantidad_de_palabras){
@@ -419,6 +431,8 @@ int main(void){
 	cola_Farmacia = farmacia_cola;
 	Cola recrea_cola;
 	cola_Recreacion = recrea_cola;
+	Cola culto_cola;
+	cola_Culto = culto_cola;
 
 	Cola cola_general;
 	cola_principal = cola_general;
@@ -432,6 +446,7 @@ int main(void){
 	crear_cola(&cola_Biblioteca);
 	crear_cola(&cola_Despensa);
 	crear_cola(&cola_Huerto);
+	crear_cola(&cola_Culto);
 
 
 	struct Persona p;
@@ -467,7 +482,7 @@ int main(void){
 	// Persona 1
 	agregar_trabaja(&p, 30, 2);
 	agregar_palabra_listaAcciones(&p, "Trabaja");
-	agregar_requiere(&p, "Biblioteca", 60, 6);
+	agregar_requiere(&p, "Gym", 60, 6);
 	agregar_palabra_listaAcciones(&p, "Requiere");
 	agregar_trabaja(&p, 60, 6);
 	agregar_palabra_listaAcciones(&p, "Trabaja");
@@ -586,7 +601,8 @@ int main(void){
 	insertar_persona(&cola_principal, persona2);
 	insertar_persona(&cola_principal, persona3);
 
-
+	//round_robin(&cola_principal, 100);
+	//primero_llegar(&cola_principal, 100);
 
 	int opcion;
 
