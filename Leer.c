@@ -8,7 +8,7 @@
 #define BUFFER_SIZE 1024
 
 int main() {
-    char* path = "C:\\Users\\Adrmr\\Documents\\UNIVERSIDAD\\Operativos\\Tareas de la comuna\\";
+    char* path = "C:\\Users\\Acer Swift 3\\Documents\\Operativos\\Tareas de la comuna\\";
     DIR* directory = opendir(path);
     struct dirent* file;
 
@@ -34,14 +34,14 @@ int main() {
                             // Extraer los datos y agregar a la lista de requieres
                             struct Requiere req;
                             strcpy(req.Area, strtok(NULL, " "));
-                            req.Bateria = atoi(strtok(NULL, " "));
                             req.Tiempo = atoi(strtok(NULL, " "));
+                            req.Bateria = atoi(strtok(NULL, " "));
                             requieres[num_requiere++] = req;
                         } else if (strcmp(token, "Trabaja") == 0) {
                             // Extraer los datos y agregar a la lista de trabajas
                             struct Trabaja tra;
-                            tra.Bateria = atoi(strtok(NULL, " "));
                             tra.Tiempo = atoi(strtok(NULL, " "));
+                            tra.Bateria = atoi(strtok(NULL, " "));
                             trabajas[num_trabaja++] = tra;
                         }
                     }
